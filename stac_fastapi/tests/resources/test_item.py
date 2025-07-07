@@ -1005,6 +1005,9 @@ async def _search_and_get_ids(
 async def test_search_datetime_with_null_datetime(
     app_client, txn_client, load_test_data
 ):
+    if not os.getenv("ENABLE_DATETIME_INDEX_FILTERING"):
+        pytest.skip()
+
     """Test datetime filtering when properties.datetime is null or set, ensuring start_datetime and end_datetime are set when datetime is null."""
     # Setup: Create test collection
     test_collection = load_test_data("test_collection.json")
