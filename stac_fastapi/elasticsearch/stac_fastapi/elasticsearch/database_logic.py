@@ -4,7 +4,7 @@ import asyncio
 import logging
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from copy import deepcopy
-from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, Union
+from typing import Any, Dict, Iterable, List, Optional, Tuple, Type
 
 import attr
 import elasticsearch.helpers as helpers

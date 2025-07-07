@@ -59,7 +59,6 @@ from stac_fastapi.sfeos_helpers.search_engine import (
 )
 from stac_fastapi.types.errors import ConflictError, NotFoundError
 from stac_fastapi.types.links import resolve_links
-from stac_fastapi.types.rfc3339 import DateTimeType
 from stac_fastapi.types.stac import Collection, Item
 
 logger = logging.getLogger(__name__)
@@ -1289,12 +1288,7 @@ class DatabaseLogic(BaseDatabaseLogic):
             index=COLLECTIONS_INDEX, id=collection_id, refresh=refresh
         )
         # Delete the item index for the collection
-        try:
-            await delete_item_index(collection_id)
-        except Exception as e:
-            logger.error(
-                f"Failed to delete item index for collection {collection_id}: {e}"
-            )
+        await delete_item_index(collection_id)
 
     async def bulk_async(
         self,

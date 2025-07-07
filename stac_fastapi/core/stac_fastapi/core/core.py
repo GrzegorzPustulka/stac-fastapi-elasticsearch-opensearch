@@ -514,7 +514,9 @@ class CoreClient(AsyncBaseCoreClient):
             )
         except (ValueError, TypeError) as e:
             # Handle invalid interval formats if return_date fails
-            logger.error(f"Invalid interval format: {search_request.datetime}, error: {e}")
+            logger.error(
+                f"Invalid interval format: {search_request.datetime}, error: {e}"
+            )
             datetime_search = None
 
         if search_request.bbox:
