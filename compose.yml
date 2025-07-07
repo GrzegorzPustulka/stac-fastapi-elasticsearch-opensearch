@@ -21,6 +21,7 @@ services:
       - ES_USE_SSL=false
       - ES_VERIFY_CERTS=false
       - BACKEND=elasticsearch
+      - ENABLE_DATETIME_INDEX_FILTERING=true
     ports:
       - "8080:8080"
     volumes:
@@ -55,6 +56,7 @@ services:
       - ES_VERIFY_CERTS=false
       - BACKEND=opensearch
       - STAC_FASTAPI_RATE_LIMIT=200/minute
+      - ENABLE_DATETIME_INDEX_FILTERING=true
     ports:
       - "8082:8082"
     volumes:
@@ -69,9 +71,11 @@ services:
   elasticsearch:
     container_name: es-container
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-8.11.0}
+    platform: linux/amd64
     hostname: elasticsearch
     environment:
       ES_JAVA_OPTS: -Xms512m -Xmx1g
+      action.destructive_requires_name: false
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch/snapshots:/usr/share/elasticsearch/snapshots
@@ -81,11 +85,13 @@ services:
   opensearch:
     container_name: os-container
     image: opensearchproject/opensearch:${OPENSEARCH_VERSION:-2.11.1}
+    platform: linux/amd64
     hostname: opensearch
     environment:
       - discovery.type=single-node
       - plugins.security.disabled=true
       - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+      - action.destructive_requires_name=false
     volumes:
       - ./opensearch/config/opensearch.yml:/usr/share/opensearch/config/opensearch.yml
       - ./opensearch/snapshots:/usr/share/opensearch/snapshots
