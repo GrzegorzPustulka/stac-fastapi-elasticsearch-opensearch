@@ -28,7 +28,7 @@ class UnfilteredIndexSelector(IndexSelectionStrategy):
         """
         return indices(collection_ids)
 
-    def refresh_cache(self):
+    async def refresh_cache(self):
         """Refresh cache (no-op for unfiltered selector).
 
         Note:
